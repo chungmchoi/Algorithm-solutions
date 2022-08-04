@@ -1,0 +1,15 @@
+// https://leetcode.com/problems/longest-palindrome/
+
+class Solution {
+    public int longestPalindrome(String s) {
+        
+        int[] countCharacters = new int['z'-'A'+1]; 
+        for (char c:s.toCharArray())        countCharacters[c-'A']++;
+        int ans = 0;
+        for (int cc:countCharacters)        ans += (cc/2)*2;    
+        return s.length()==ans? ans: ans+1;
+}
+
+//Step 1. Count the number of times a character appears in the string.
+//Step 2. All even counts are valid palindromes.
+//Step 3. All odd counts need to be subtracted by 1 to become valid, except for a single odd character which can be in the middle. For example, if s = "aaabbccc". 'a' and 'c' have odd counts but one can be in the middle while the other needs to be subtracted by 1. The answer can be "cababac" (a in middle) or "acbcbca" (c in middle).
