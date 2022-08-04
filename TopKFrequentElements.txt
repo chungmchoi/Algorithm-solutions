@@ -1,0 +1,20 @@
+// https://leetcode.com/problems/top-k-frequent-elements/
+
+class Solution {
+    
+    public int[] topKFrequent(int[] nums, int k) {
+
+	// Step 1. Store the element as the key and count as the value inside a hash map.
+        Map<Integer,Integer> map = new HashMap();
+        for (int n:nums)    map.put(n,map.getOrDefault(n,0)+1);
+
+        // Step 2. Use max heap based on count size of each element.
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->b[1]-a[1]); 
+        for (int ks:map.keySet())       pq.offer(new int[]{ks,map.get(ks)});
+
+        // Step 3. Pop off the top of the max heap k number of times and return the answer.
+        int[] ans = new int[k];
+        for (int i = 0; i < k; i++)     ans[i] = pq.poll()[0];
+        return ans;
+    }
+}

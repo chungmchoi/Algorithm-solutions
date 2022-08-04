@@ -1,0 +1,30 @@
+// https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/
+// Binary search solution
+
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+       
+        if (m*k > bloomDay.length)      return -1;
+        int left = 1;
+        int right = 0;
+        for (int bd:bloomDay)       right=Math.max(bd,right);
+        while (left<right)    {
+            int mid=left+(right-left)/2;
+            int bouqCount = 0;
+            int adjacentFlowers = 0;
+            // This for loop finds the number of bouquettes on this day (mid = day).
+            for (int bd:bloomDay)   {
+                if (bd>mid)     adjacentFlowers = 0;
+                else if (k == ++adjacentFlowers)    {
+                    bouqCount++;
+                    adjacentFlowers = 0;
+                }    
+            }
+            if (bouqCount<m)        left=mid+1;
+            else                    right = mid;
+        }
+        return left;
+    }
+}
+
+//My solution here: https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/discuss/2277318/dont-understand-the-question-heres-a-detailed-explanation-with-example-and-java-solution
